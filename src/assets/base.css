@@ -27,8 +27,19 @@
     color 0.5s;
 }
 
+.buttons {
+  & > * {
+    margin-right: 0.8rem;
+  }
+
+  & > *:last-of-type {
+    margin: 0;
+  }
+}
+
 button,
-input[type="submit"] {
+input[type="submit"],
+input[type="button"] {
   padding: 0.5rem 1rem;
   border: 0;
   outline: 0;
@@ -66,18 +77,18 @@ label {
 
 .flex-left {
   justify-content: flex-start;
-}
 
-.flex-left > * {
-  margin-right: 0.8rem;
+  & > * {
+    margin-right: 0.8rem;
+  }
 }
 
 .flex-right {
   justify-content: flex-end;
-}
 
-.flex-right > * {
-  margin-left: 0.8rem;
+  & > * {
+    margin-left: 0.8rem;
+  }
 }
 
 div.line {
@@ -86,7 +97,7 @@ div.line {
   background: var(--c-background-2);
 }
 
-div.dialog {
+dialog {
   position: fixed;
   width: 42vw;
   height: 80vh;
@@ -94,13 +105,10 @@ div.dialog {
   top: calc(10vh - 1.5rem);
   padding: 1.5rem 2rem;
   box-shadow: 0 0.1rem 3px 3px rgba(0, 0, 0, 0.1);
+  border: 0;
   border-radius: 0.3rem;
   background: var(--c-background);
   overflow: auto;
-}
-
-.invisible {
-  display: none;
 }
 
 table.result {

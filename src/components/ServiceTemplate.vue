@@ -22,7 +22,6 @@ watchEffect(() => {
 
 // 页内状态
 
-const isNewingFormPoped = ref(false);
 const searchBar = ref({
   keyword: "",
   isId: false,
@@ -80,7 +79,6 @@ function getParams(e?: Event) {
 function handleSubmit(e?: Event) {
   objs.value = [];
   subObjs.value = [];
-  isNewingFormPoped.value = false;
 
   const params = getParams(e);
   NetworkIOEngine.getDatas(props.serviceModule, needQueryA.value, params).then(
@@ -92,16 +90,20 @@ function handleSubmit(e?: Event) {
   );
 }
 
-function handleNewOrCancelOP() {
+const dialog = ref();
+
+function handleShowDialog(display: boolean) {
   opType.value = "add";
-  isNewingFormPoped.value = !isNewingFormPoped.value;
+  if (dialog && dialog.value)
+    if (display) dialog.value.showModal();
+    else dialog.value.close();
 
   selectedRowValue.value = [];
 }
 
 function handleAlterOP(id: number) {
   opType.value = "update";
-  isNewingFormPoped.value = true;
+  handleShowDialog(true);
 
   objs.value.forEach((o) => {
     if (id === o.id) selectedRowValue.value = Object.values(o);
@@ -120,9 +122,7 @@ function handleDeleteOP(id: number) {
   <div class="shell">
     <div class="tool-bar">
       <div class="flex-left">
-        <button @click="handleNewOrCancelOP">
-          {{ isNewingFormPoped ? "取消" : "新增" }}
-        </button>
+        <button @click="handleShowDialog(true)">新增</button>
       </div>
       <form class="flex-right" @submit.prevent="handleSubmit">
         <input
@@ -134,17 +134,19 @@ function handleDeleteOP(id: number) {
         <input type="checkbox" name="isId" id="isId" v-model="searchBar.isId" />
         <label for="isId">ID 查询</label>
         <button v-show="false" type="submit"></button>
-        <button
-          v-for="b in [0, 1]"
-          type="submit"
-          @click="(needQueryA = !b), (opType = 'query')"
-        >
-          查询{{ tableNames[b] }}
-        </button>
+        <div class="buttons">
+          <button
+            v-for="b in [0, 1]"
+            type="submit"
+            @click="(needQueryA = !b), (opType = 'query')"
+          >
+            查询{{ tableNames[b] }}
+          </button>
+        </div>
       </form>
     </div>
     <div class="line"></div>
-    <div v-show="isNewingFormPoped" class="dialog">
+    <dialog ref="dialog">
       <form class="row-edit" @submit.prevent="handleSubmit">
         <p class="tip">若处于“新增”模式，则对唯一识别码的指定无效。</p>
         <table class="infos">
@@ -163,9 +165,12 @@ function handleDeleteOP(id: number) {
             </td>
           </tr>
         </table>
-        <input type="submit" />
+        <span class="buttons" @click="handleShowDialog(false)">
+          <input type="submit" />
+          <input type="button" value="取消" />
+        </span>
       </form>
-    </div>
+    </dialog>
     <table class="result">
       <thead>
         <tr>
@@ -201,22 +206,28 @@ function handleDeleteOP(id: number) {
   flex-direction: column;
   height: calc(100% - 2rem);
   padding: 1rem 2rem;
+
   & .tool-bar {
     display: flex;
+
     & .flex-right {
       flex: 5;
     }
   }
+
   & .tip {
     font-style: italic;
     font-size: 0.8rem;
   }
+
   & .infos {
     margin-bottom: 1rem;
+
     & .label {
       margin-right: 1rem;
     }
   }
+
   & .result .ps {
     width: 10rem;
     max-height: 5rem;
@@ -224,4 +235,3 @@ function handleDeleteOP(id: number) {
   }
 }
 </style>
-@/types/ModuleMapper

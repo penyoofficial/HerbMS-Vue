@@ -60,9 +60,20 @@ timer.value.forEach((_, i) => {
 </template>
 
 <style scoped>
+@keyframes danmu-action {
+  0% {
+    left: 110%;
+  }
+
+  100% {
+    left: -25%;
+  }
+}
+
 .shell {
   position: relative;
   padding: 3rem 4rem;
+
   & .theme {
     position: absolute;
     top: 1rem;
@@ -73,33 +84,27 @@ timer.value.forEach((_, i) => {
     background: var(--c-highlight);
     opacity: 0.3;
   }
+
   & h1 {
     margin-bottom: 3rem;
     color: var(--c-text);
   }
+
   & .danmu-pool {
     position: relative;
+
     & .danmu {
       position: absolute;
       color: var(--c-text);
       white-space: nowrap;
       animation: danmu-action var(--speed) linear infinite;
+
       &:hover {
         z-index: 999;
         color: var(--c-highlight);
         animation-play-state: paused;
       }
     }
-  }
-}
-
-@keyframes danmu-action {
-  0% {
-    left: 110%;
-  }
-
-  100% {
-    left: -25%;
   }
 }
 </style>

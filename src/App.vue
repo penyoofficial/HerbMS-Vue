@@ -66,17 +66,21 @@ function handleChangeView(path: PageType) {
   height: calc(100vh - 2.2rem - 2rem);
   padding: 2.2rem 2rem 2rem;
   background: var(--c-highlight);
+
   & .title-box {
     display: flex;
     color: var(--c-text-highlight);
     user-select: none;
+
     & .title {
       margin-right: 0.3rem;
     }
+
     & .subtitle {
       opacity: 0.3;
     }
   }
+
   & .content {
     display: flex;
     width: 100%;
@@ -85,10 +89,12 @@ function handleChangeView(path: PageType) {
     border-radius: 0.3rem;
     overflow: hidden;
     box-shadow: 0 0.1rem 3px 3px rgba(0, 0, 0, 0.1);
+
     & .menu {
       flex: 1;
       box-shadow: 0 0.1rem 3px 3px rgba(0, 0, 0, 0.1);
       user-select: none;
+
       & .fx {
         display: flex;
         align-items: center;
@@ -96,6 +102,7 @@ function handleChangeView(path: PageType) {
         border-bottom: 1px solid var(--c-background-2);
         color: var(--c-text);
         text-indent: 2rem;
+
         &.now {
           background: linear-gradient(
             to right,
@@ -105,12 +112,14 @@ function handleChangeView(path: PageType) {
           color: var(--c-text-highlight);
         }
       }
+
       & .tip {
         padding: 2rem;
         color: var(--c-text);
         opacity: 0.5;
       }
     }
+
     & .view {
       flex: 4;
       overflow: hidden;
@@ -118,4 +127,3 @@ function handleChangeView(path: PageType) {
   }
 }
 </style>
-./types/ModuleMapper
